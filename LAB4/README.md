@@ -4,29 +4,29 @@ Họ và tên: Lâm Thái Hòa
 Mã số sinh viên: 1150080053
 Tên bài Lab: Lab 4 - Khảo sát và đánh giá bề mặt mạng bằng Nmap
 
-1. NỘI DUNG ĐÃ THỰC HIỆN
+# LAB 4 – Nmap
 
-- Chuẩn bị môi trường thực hành bằng máy ảo.
-- Sử dụng Kali Linux làm máy quét Nmap.
-- Sử dụng Windows 11 VM làm máy đích.
-- Thiết lập mạng Host-Only để các máy ảo giao tiếp trong mạng nội bộ.
-- Kiểm tra địa chỉ IP của các máy ảo.
-- Kiểm tra kết nối giữa các máy trước khi thực hiện quét.
+## 1. Mục tiêu
+- Phát hiện máy đang hoạt động trong mạng.
+- Quét cổng TCP/UDP và nhận diện dịch vụ.
+- Nhận diện hệ điều hành bằng Nmap.
+- Sử dụng NSE kiểm tra thông tin SMB và dấu hiệu lỗ hổng.
+- Thực hành hardening và so sánh kết quả trước/sau.
 
-2. CÀI ĐẶT NMAP TRÊN WINDOWS 11
+## 2. Môi trường
+- VMware Workstation
+- Kali Linux: `10.0.0.3`
+- Metasploitable 2: `10.0.0.20`
+- LAN Segment: `lab4-nmap`
+- Nmap: `7.99`
 
-2.1. Cài đặt Nmap + Npcap + Zenmap
-
-- Tải bộ cài Nmap từ trang chính thức: nmap.org/download.html
-- Chạy file cài đặt với quyền Administrator.
-- Giữ các thành phần Nmap Core Files, Register Nmap Path, Npcap và Zenmap nếu được hiển thị.
-- Khi cài Npcap, giữ cấu hình mặc định.
-- Hoàn tất quá trình cài đặt Nmap và Npcap.
-- Đã thực hiện cài đặt Npcap trên Windows 11 VM.
-
-KẾT QUẢ:
-Đã thực hiện các bước chuẩn bị và cài đặt Nmap/Npcap trên Windows 11 VM theo hướng dẫn Lab 4.
-
-LƯU Ý:
-- Chỉ thực hiện quét trên các máy ảo thuộc môi trường Lab.
-- Không quét hệ thống hoặc địa chỉ IP bên ngoài khi chưa được phép.
+## 3. Các lệnh chính
+```bash
+sudo nmap -sn 10.0.0.0/24
+sudo nmap -sS 10.0.0.20
+sudo nmap -sT 10.0.0.20
+sudo nmap -sV 10.0.0.20
+sudo nmap -O 10.0.0.20
+sudo nmap -A 10.0.0.20
+sudo nmap -p 445 --script smb-os-discovery 10.0.0.20
+sudo nmap -p 445 --script smb-vuln-ms17-010 10.0.0.20
